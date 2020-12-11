@@ -2,30 +2,37 @@ package main
 
 import "fmt"
 
-type part struct {
-	description string
-	count       int
+type subscriber struct {
+	name   string
+	rate   int
+	active bool
 }
-
-func showInfo(p part) {
-	fmt.Println("Description : ", p.description)
-	fmt.Println("count : ", p.count)
+func printInfo(s *subscriber) {
+	fmt.Println("Name : ", s.name)
+	fmt.Println("Monthly rate : ", s.rate)
+	fmt.Println("Active? ", s.active)
 }
-
-func minimumOrder(description string) part {
-	var p part
-	p.description = description
-	p.count = 1000
-	return p
+func defaultSubscriber(name string) *subscriber {
+	var s subscriber
+	s.name = name
+	s.rate = 5000
+	s.active = true
+	return &s
 }
-
+func applyDiscount(s *subscriber) {
+	s.rate = 4000
+}
 func main() {
-	p := minimumOrder("Hex bolts")
-	fmt.Println(p.description, p.count)
+	s1 := defaultSubscriber("kim")
+	//s1.rate = 4500
+	applyDiscount(s1)
+	printInfo(s1)
 
-	//	var bolts part
-	//	bolts.description = "Hex bolts"
-	//	bolts.count = 100
-	//	showInfo(bolts)
-	//	fmt.Println("test")
+	s2 := defaultSubscriber("park")
+	printInfo(s2)
+
+	var s3 subscriber
+	applyDiscount(&s3)
+	fmt.Println(s3.rate)
+
 }
